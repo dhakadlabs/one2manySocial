@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { handleCallback as handleMastodonCallback } from '../plugins/mastodon/auth'
+import { handleCallback as handleTumblrCallback } from '../plugins/tumblr/auth'
 
 export default function OAuthCallback() {
     const [searchParams] = useSearchParams()
@@ -11,6 +12,8 @@ export default function OAuthCallback() {
     useEffect(() => {
         const code = searchParams.get('code')
         const error = searchParams.get('error')
+        const oauthToken = searchParams.get('oauth_token')
+        const oauthVerifier = searchParams.get('oauth_verifier')
 
         if (error) {
             setStatus('error')
@@ -19,21 +22,12 @@ export default function OAuthCallback() {
             return
         }
 
-        if (!code) {
-            setStatus('error')
-            setMessage('No authorization code received. Please try again.')
-            setTimeout(() => navigate('/app/connections'), 3000)
-            return
-        }
-
-        // Detect which platform initiated the OAuth flow
-        const pending = sessionStorage.getItem('mastodon_oauth_pending')
-
-        if (pending) {
-            handleMastodonCallback(code)
+        // Tumblr OAuth 1.0 callback
+        if (oauthToken && oauthVerifier) {
+            handleTumblrCallback(oauthToken, oauthVerifier)
                 .then(() => {
                     setStatus('success')
-                    setMessage('Mastodon connected successfully!')
+                    setMessage('Tumblr connected successfully!')
                     setTimeout(() => navigate('/app/connections'), 2000)
                 })
                 .catch(err => {
@@ -44,7 +38,25 @@ export default function OAuthCallback() {
             return
         }
 
-        // Unknown platform
+        // Mastodon OAuth 2.0 callback
+        if (code) {
+            const pending = sessionStorage.getItem('mastodon_oauth_pending')
+            if (pending) {
+                handleMastodonCallback(code)
+                    .then(() => {
+                        setStatus('success')
+                        setMessage('Mastodon connected successfully!')
+                        setTimeout(() => navigate('/app/connections'), 2000)
+                    })
+                    .catch(err => {
+                        setStatus('error')
+                        setMessage(err.message ?? 'Connection failed. Please try again.')
+                        setTimeout(() => navigate('/app/connections'), 3000)
+                    })
+                return
+            }
+        }
+
         setStatus('error')
         setMessage('Unknown OAuth flow. Please try again.')
         setTimeout(() => navigate('/app/connections'), 3000)
@@ -64,7 +76,11 @@ export default function OAuthCallback() {
                     {status === 'processing' ? '◌' : status === 'success' ? '✓' : '✗'}
                 </div>
                 <div style={styles.title}>
-                    {status === 'processing' ? 'Connecting...' : status === 'success' ? 'Connected!' : 'Failed'}
+                    {status === 'processing'
+                        ? 'Connecting...'
+                        : status === 'success'
+                            ? 'Connected!'
+                            : 'Failed'}
                 </div>
                 <div style={styles.message}>{message}</div>
                 {status !== 'processing' && (

@@ -4,6 +4,8 @@ import { DevToPlugin } from '../plugins/devto'
 import { TelegramPlugin } from '../plugins/telegram'
 import { BlueskyPlugin } from '../plugins/bluesky'
 import { MastodonPlugin } from '../plugins/mastodon'
+import { HashnodePlugin } from '../plugins/hashnode'
+import { TumblrPlugin } from '../plugins/tumblr'
 
 export const PLATFORM_REGISTRY: PlatformPlugin[] = [
     new DiscordPlugin(),
@@ -11,6 +13,8 @@ export const PLATFORM_REGISTRY: PlatformPlugin[] = [
     new TelegramPlugin(),
     new BlueskyPlugin(),
     new MastodonPlugin(),
+    new HashnodePlugin(),
+    new TumblrPlugin(),
 ]
 
 export function getPlugin(id: string): PlatformPlugin | undefined {

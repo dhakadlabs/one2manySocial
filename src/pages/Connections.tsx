@@ -102,6 +102,54 @@ const ALL_PLATFORMS = [
             },
         ],
     },
+    {
+        id: 'hashnode',
+        name: 'Hashnode',
+        description: 'Publish articles to Hashnode',
+        authType: 'graphql_token',
+        color: '#2962ff',
+        bg: 'rgba(41,98,255,0.10)',
+        fields: [
+            {
+                key: 'accessToken',
+                label: 'Personal Access Token',
+                placeholder: 'Paste your Hashnode access token...',
+                type: 'password',
+                hint: 'Go to hashnode.com → Profile → Settings → Developer → Personal Access Tokens → Generate Token',
+            },
+            {
+                key: 'publicationId',
+                label: 'Publication ID',
+                placeholder: '64a3b2c1d4e5f6a7b8c9d0e1',
+                type: 'text',
+                hint: 'Go to your Hashnode blog dashboard → Settings → scroll down to find Publication ID',
+            },
+        ],
+    },
+    {
+        id: 'tumblr',
+        name: 'Tumblr',
+        description: 'Post to Tumblr via OAuth 1.0',
+        authType: 'oauth1',
+        color: '#35465c',
+        bg: 'rgba(53,70,92,0.20)',
+        fields: [
+            {
+                key: 'consumerKey',
+                label: 'Consumer Key',
+                placeholder: 'Paste your Tumblr consumer key...',
+                type: 'text',
+                hint: 'Go to tumblr.com/oauth/apps → Register Application → get Consumer Key',
+            },
+            {
+                key: 'consumerSecret',
+                label: 'Consumer Secret',
+                placeholder: 'Paste your Tumblr consumer secret...',
+                type: 'password',
+                hint: 'Found alongside your Consumer Key in your Tumblr app settings',
+            },
+        ],
+    },
 ]
 
 export default function Connections() {
@@ -302,7 +350,7 @@ export default function Connections() {
             <div style={styles.comingSoon}>
                 <div style={styles.comingSoonLabel}>More platforms coming soon</div>
                 <div style={styles.comingSoonGrid}>
-                    {['Reddit', 'WordPress', 'Hashnode', 'Pinterest', 'Tumblr'].map(name => (
+                    {['Reddit', 'WordPress', 'Pinterest'].map(name => (
                         <div key={name} style={styles.comingSoonChip}>{name}</div>
                     ))}
                 </div>
