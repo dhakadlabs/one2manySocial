@@ -20,6 +20,71 @@ const ALL_PLATFORMS = [
             },
         ],
     },
+    {
+        id: 'devto',
+        name: 'Dev.to',
+        description: 'Publish articles to Dev.to',
+        authType: 'api_token',
+        color: '#0838fe',
+        bg: 'rgba(8,56,254,0.10)',
+        fields: [
+            {
+                key: 'apiKey',
+                label: 'API Key',
+                placeholder: 'Paste your Dev.to API key here...',
+                type: 'password',
+                hint: 'Get your API key from dev.to → Settings → Extensions → DEV API Keys → Generate API Key',
+            },
+        ],
+    },
+    {
+        id: 'telegram',
+        name: 'Telegram',
+        description: 'Post to a channel or group via bot',
+        authType: 'bot_token',
+        color: '#0088cc',
+        bg: 'rgba(0,136,204,0.10)',
+        fields: [
+            {
+                key: 'botToken',
+                label: 'Bot Token',
+                placeholder: '7123456789:AAF-xxxxxxxxxxxxxxxxxxxx',
+                type: 'password',
+                hint: 'Get your token from @BotFather on Telegram → /newbot',
+            },
+            {
+                key: 'chatId',
+                label: 'Chat ID',
+                placeholder: '123456789 or -100123456789',
+                type: 'text',
+                hint: 'Send a message to your bot then visit: api.telegram.org/bot{TOKEN}/getUpdates',
+            },
+        ],
+    },
+    {
+        id: 'bluesky',
+        name: 'Bluesky',
+        description: 'Post to Bluesky via AT Protocol',
+        authType: 'api_token',
+        color: '#0085ff',
+        bg: 'rgba(0,133,255,0.10)',
+        fields: [
+            {
+                key: 'handle',
+                label: 'Handle',
+                placeholder: 'yourname.bsky.social',
+                type: 'text',
+                hint: 'Your Bluesky handle — e.g. yourname.bsky.social',
+            },
+            {
+                key: 'appPassword',
+                label: 'App Password',
+                placeholder: 'xxxx-xxxx-xxxx-xxxx',
+                type: 'password',
+                hint: 'Go to Bluesky → Settings → Privacy and Security → App Passwords → Add App Password',
+            },
+        ],
+    },
 ]
 
 export default function Connections() {
@@ -220,7 +285,7 @@ export default function Connections() {
             <div style={styles.comingSoon}>
                 <div style={styles.comingSoonLabel}>More platforms coming soon</div>
                 <div style={styles.comingSoonGrid}>
-                    {['Reddit', 'Mastodon', 'Bluesky', 'Telegram', 'WordPress', 'Dev.to', 'Hashnode', 'Pinterest', 'Tumblr'].map(name => (
+                    {['Reddit', 'Mastodon', 'WordPress', 'Hashnode', 'Pinterest', 'Tumblr'].map(name => (
                         <div key={name} style={styles.comingSoonChip}>{name}</div>
                     ))}
                 </div>
