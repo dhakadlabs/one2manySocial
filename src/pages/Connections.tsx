@@ -85,6 +85,23 @@ const ALL_PLATFORMS = [
             },
         ],
     },
+    {
+        id: 'mastodon',
+        name: 'Mastodon',
+        description: 'Post to any Mastodon instance via OAuth',
+        authType: 'oauth2',
+        color: '#6364ff',
+        bg: 'rgba(99,100,255,0.10)',
+        fields: [
+            {
+                key: 'instanceUrl',
+                label: 'Instance URL',
+                placeholder: 'https://mastodon.social',
+                type: 'text',
+                hint: 'Enter your Mastodon instance URL — e.g. https://mastodon.social or https://fosstodon.org',
+            },
+        ],
+    },
 ]
 
 export default function Connections() {
@@ -285,7 +302,7 @@ export default function Connections() {
             <div style={styles.comingSoon}>
                 <div style={styles.comingSoonLabel}>More platforms coming soon</div>
                 <div style={styles.comingSoonGrid}>
-                    {['Reddit', 'Mastodon', 'WordPress', 'Hashnode', 'Pinterest', 'Tumblr'].map(name => (
+                    {['Reddit', 'WordPress', 'Hashnode', 'Pinterest', 'Tumblr'].map(name => (
                         <div key={name} style={styles.comingSoonChip}>{name}</div>
                     ))}
                 </div>
