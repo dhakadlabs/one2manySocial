@@ -6,11 +6,13 @@ import Scheduled from '../../pages/Scheduled'
 import Connections from '../../pages/Connections'
 import Settings from '../../pages/Settings'
 import PlatformIcon from '../shared/PlatformIcon'
+import Help from '../../pages/Help'
 
 const navItems = [
     { id: 'composer', label: 'Composer', path: '/app', icon: '⊞' },
     { id: 'scheduled', label: 'Scheduled', path: '/app/scheduled', icon: '◷' },
     { id: 'history', label: 'History', path: '/app/history', icon: '≡' },
+    { id: 'help', label: 'Help', path: '/app/help', icon: '?' },
 ]
 
 const settingItems = [
@@ -68,53 +70,53 @@ export default function AppLayout() {
                         ← Back to home
                     </div>
                 </div>
-        {/* Main Nav */ }
-        < nav style = { styles.nav } >
-            <div style={styles.navLabel}>Menu</div>
-    {
-        navItems.map(item => (
-            <div
-                key={item.id}
-                style={{
-                    ...styles.navItem,
-                    ...(isActive(item.path) ? styles.navItemActive : {}),
-                    ...(hoveredNav === item.id && !isActive(item.path) ? styles.navItemHover : {}),
-                }}
-                onClick={() => navigate(item.path)}
-                onMouseEnter={() => setHoveredNav(item.id)}
-                onMouseLeave={() => setHoveredNav(null)}
-            >
-                {isActive(item.path) && <div style={styles.navActiveBar} />}
-                <span style={styles.navIcon}>{item.icon}</span>
-                <span>{item.label}</span>
-            </div>
-        ))
-    }
+                {/* Main Nav */}
+                < nav style={styles.nav} >
+                    <div style={styles.navLabel}>Menu</div>
+                    {
+                        navItems.map(item => (
+                            <div
+                                key={item.id}
+                                style={{
+                                    ...styles.navItem,
+                                    ...(isActive(item.path) ? styles.navItemActive : {}),
+                                    ...(hoveredNav === item.id && !isActive(item.path) ? styles.navItemHover : {}),
+                                }}
+                                onClick={() => navigate(item.path)}
+                                onMouseEnter={() => setHoveredNav(item.id)}
+                                onMouseLeave={() => setHoveredNav(null)}
+                            >
+                                {isActive(item.path) && <div style={styles.navActiveBar} />}
+                                <span style={styles.navIcon}>{item.icon}</span>
+                                <span>{item.label}</span>
+                            </div>
+                        ))
+                    }
 
-    <div style={{ ...styles.navLabel, marginTop: '16px' }}>Settings</div>
-    {
-        settingItems.map(item => (
-            <div
-                key={item.id}
-                style={{
-                    ...styles.navItem,
-                    ...(isActive(item.path) ? styles.navItemActive : {}),
-                    ...(hoveredNav === item.id && !isActive(item.path) ? styles.navItemHover : {}),
-                }}
-                onClick={() => navigate(item.path)}
-                onMouseEnter={() => setHoveredNav(item.id)}
-                onMouseLeave={() => setHoveredNav(null)}
-            >
-                {isActive(item.path) && <div style={styles.navActiveBar} />}
-                <span style={styles.navIcon}>{item.icon}</span>
-                <span>{item.label}</span>
-            </div>
-        ))
-    }
+                    <div style={{ ...styles.navLabel, marginTop: '16px' }}>Settings</div>
+                    {
+                        settingItems.map(item => (
+                            <div
+                                key={item.id}
+                                style={{
+                                    ...styles.navItem,
+                                    ...(isActive(item.path) ? styles.navItemActive : {}),
+                                    ...(hoveredNav === item.id && !isActive(item.path) ? styles.navItemHover : {}),
+                                }}
+                                onClick={() => navigate(item.path)}
+                                onMouseEnter={() => setHoveredNav(item.id)}
+                                onMouseLeave={() => setHoveredNav(null)}
+                            >
+                                {isActive(item.path) && <div style={styles.navActiveBar} />}
+                                <span style={styles.navIcon}>{item.icon}</span>
+                                <span>{item.label}</span>
+                            </div>
+                        ))
+                    }
                 </nav >
 
-        {/* Platform Chips */ }
-        < div style = { styles.chipsSection } >
+                {/* Platform Chips */}
+                < div style={styles.chipsSection} >
                     <div style={styles.navLabel}>Platforms</div>
                     <div style={styles.chipsGrid}>
                         {platforms.map(p => (
@@ -135,15 +137,16 @@ export default function AppLayout() {
             </aside>
 
             {/* MAIN */}
-        < main style = { styles.main } >
-            <Routes>
-                <Route path="/" element={<Composer />} />
-                <Route path="/scheduled" element={<Scheduled />} />
-                <Route path="/history" element={<History />} />
-                <Route path="/connections" element={<Connections />} />
-                <Route path="/settings" element={<Settings />} />
-            </Routes>
-                </main >
+            < main style={styles.main} >
+                <Routes>
+                    <Route path="/" element={<Composer />} />
+                    <Route path="/scheduled" element={<Scheduled />} />
+                    <Route path="/history" element={<History />} />
+                    <Route path="/connections" element={<Connections />} />
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/help" element={<Help />} />
+                </Routes>
+            </main >
 
         </div >
     )
