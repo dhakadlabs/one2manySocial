@@ -150,6 +150,7 @@ const ALL_PLATFORMS = [
             },
         ],
     },
+
 ]
 
 export default function Connections() {

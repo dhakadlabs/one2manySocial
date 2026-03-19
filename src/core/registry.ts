@@ -7,6 +7,7 @@ import { MastodonPlugin } from '../plugins/mastodon'
 import { HashnodePlugin } from '../plugins/hashnode'
 import { TumblrPlugin } from '../plugins/tumblr'
 
+
 export const PLATFORM_REGISTRY: PlatformPlugin[] = [
     new DiscordPlugin(),
     new DevToPlugin(),
@@ -15,6 +16,7 @@ export const PLATFORM_REGISTRY: PlatformPlugin[] = [
     new MastodonPlugin(),
     new HashnodePlugin(),
     new TumblrPlugin(),
+
 ]
 
 export function getPlugin(id: string): PlatformPlugin | undefined {
