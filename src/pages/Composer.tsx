@@ -4,6 +4,7 @@ import { useComposerStore } from '../store/composerStore'
 import { usePlatforms } from '../hooks/usePlatforms'
 import { publishToAll } from '../core/publishingEngine'
 import { db } from '../db/client'
+import PlatformIcon from '../components/shared/PlatformIcon'
 
 // Platform character limits for warnings
 const PLATFORM_LIMITS: Record<string, {
@@ -334,9 +335,8 @@ export default function Composer() {
                   <div style={{
                     ...styles.platformIcon,
                     background: `${plugin.color}18`,
-                    color: plugin.color,
                   }}>
-                    {plugin.name.slice(0, 2).toUpperCase()}
+                    <PlatformIcon platformId={plugin.id} size={18} color={plugin.color} />
                   </div>
                   <div style={styles.platformName}>{plugin.name}</div>
                 </div>

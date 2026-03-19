@@ -77,6 +77,10 @@ export default function Landing() {
                         Local-first · Privacy-focused · No login required
                     </div>
 
+                    <div style={styles.heroBeta}>
+                        Beta version · Currently supports publishing articles without images and videos...
+                    </div>
+
                     <h1 style={styles.heroTitle}>
                         Write once.<br />
                         <span style={styles.heroTitleAccent}>Reach everywhere.</span>
@@ -105,6 +109,7 @@ export default function Landing() {
                         </button>
                         <button
                             style={styles.btnGhost}
+                            onClick={() => window.open('https://github.com/dhakadlabs/one2manySocial', '_blank')}
                             onMouseEnter={e => {
                                 (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.07)'
                                     ; (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.18)'
@@ -115,6 +120,21 @@ export default function Landing() {
                             }}
                         >
                             View on GitHub
+                        </button>
+
+                        <button
+                            style={{ ...styles.btnGhost, borderColor: 'rgba(139,120,255,0.3)' }}
+                            onClick={() => window.open('https://dhakadlabs.site/#support', '_blank')}
+                            onMouseEnter={e => {
+                                (e.currentTarget as HTMLButtonElement).style.background = 'rgba(139,120,255,0.08)'
+                                    ; (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(139,120,255,0.5)'
+                            }}
+                            onMouseLeave={e => {
+                                (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.03)'
+                                    ; (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(139,120,255,0.3)'
+                            }}
+                        >
+                            Support Us
                         </button>
                     </div>
 
@@ -433,6 +453,13 @@ const styles: Record<string, React.CSSProperties> = {
         background: 'var(--success)',
         boxShadow: '0 0 6px var(--success)',
         display: 'inline-block',
+    },
+    heroBeta: {
+        fontFamily: "'DM Mono', monospace",
+        fontSize: '12px',
+        color: 'var(--text-muted)',
+        opacity: 0.8,
+        marginTop: '-12px',
     },
     heroTitle: {
         fontFamily: "'Syne', sans-serif",

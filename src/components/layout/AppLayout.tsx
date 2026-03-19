@@ -5,6 +5,7 @@ import History from '../../pages/History'
 import Scheduled from '../../pages/Scheduled'
 import Connections from '../../pages/Connections'
 import Settings from '../../pages/Settings'
+import PlatformIcon from '../shared/PlatformIcon'
 
 const navItems = [
     { id: 'composer', label: 'Composer', path: '/app', icon: '⊞' },
@@ -52,51 +53,68 @@ export default function AppLayout() {
                         one2many<span style={styles.logoAccent}>Social</span>
                     </div>
                     <div style={styles.logoSub}>by Dhakad Labs</div>
+                    <div
+                        style={styles.backBtn}
+                        onClick={() => navigate('/')}
+                        onMouseEnter={e => {
+                            (e.currentTarget as HTMLDivElement).style.color = 'var(--text-primary)'
+                                ; (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--border-default)'
+                        }}
+                        onMouseLeave={e => {
+                            (e.currentTarget as HTMLDivElement).style.color = 'var(--text-muted)'
+                                ; (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--border-subtle)'
+                        }}
+                    >
+                        ← Back to home
+                    </div>
                 </div>
+        {/* Main Nav */ }
+        < nav style = { styles.nav } >
+            <div style={styles.navLabel}>Menu</div>
+    {
+        navItems.map(item => (
+            <div
+                key={item.id}
+                style={{
+                    ...styles.navItem,
+                    ...(isActive(item.path) ? styles.navItemActive : {}),
+                    ...(hoveredNav === item.id && !isActive(item.path) ? styles.navItemHover : {}),
+                }}
+                onClick={() => navigate(item.path)}
+                onMouseEnter={() => setHoveredNav(item.id)}
+                onMouseLeave={() => setHoveredNav(null)}
+            >
+                {isActive(item.path) && <div style={styles.navActiveBar} />}
+                <span style={styles.navIcon}>{item.icon}</span>
+                <span>{item.label}</span>
+            </div>
+        ))
+    }
 
-                {/* Main Nav */}
-                <nav style={styles.nav}>
-                    <div style={styles.navLabel}>Menu</div>
-                    {navItems.map(item => (
-                        <div
-                            key={item.id}
-                            style={{
-                                ...styles.navItem,
-                                ...(isActive(item.path) ? styles.navItemActive : {}),
-                                ...(hoveredNav === item.id && !isActive(item.path) ? styles.navItemHover : {}),
-                            }}
-                            onClick={() => navigate(item.path)}
-                            onMouseEnter={() => setHoveredNav(item.id)}
-                            onMouseLeave={() => setHoveredNav(null)}
-                        >
-                            {isActive(item.path) && <div style={styles.navActiveBar} />}
-                            <span style={styles.navIcon}>{item.icon}</span>
-                            <span>{item.label}</span>
-                        </div>
-                    ))}
+    <div style={{ ...styles.navLabel, marginTop: '16px' }}>Settings</div>
+    {
+        settingItems.map(item => (
+            <div
+                key={item.id}
+                style={{
+                    ...styles.navItem,
+                    ...(isActive(item.path) ? styles.navItemActive : {}),
+                    ...(hoveredNav === item.id && !isActive(item.path) ? styles.navItemHover : {}),
+                }}
+                onClick={() => navigate(item.path)}
+                onMouseEnter={() => setHoveredNav(item.id)}
+                onMouseLeave={() => setHoveredNav(null)}
+            >
+                {isActive(item.path) && <div style={styles.navActiveBar} />}
+                <span style={styles.navIcon}>{item.icon}</span>
+                <span>{item.label}</span>
+            </div>
+        ))
+    }
+                </nav >
 
-                    <div style={{ ...styles.navLabel, marginTop: '16px' }}>Settings</div>
-                    {settingItems.map(item => (
-                        <div
-                            key={item.id}
-                            style={{
-                                ...styles.navItem,
-                                ...(isActive(item.path) ? styles.navItemActive : {}),
-                                ...(hoveredNav === item.id && !isActive(item.path) ? styles.navItemHover : {}),
-                            }}
-                            onClick={() => navigate(item.path)}
-                            onMouseEnter={() => setHoveredNav(item.id)}
-                            onMouseLeave={() => setHoveredNav(null)}
-                        >
-                            {isActive(item.path) && <div style={styles.navActiveBar} />}
-                            <span style={styles.navIcon}>{item.icon}</span>
-                            <span>{item.label}</span>
-                        </div>
-                    ))}
-                </nav>
-
-                {/* Platform Chips */}
-                <div style={styles.chipsSection}>
+        {/* Platform Chips */ }
+        < div style = { styles.chipsSection } >
                     <div style={styles.navLabel}>Platforms</div>
                     <div style={styles.chipsGrid}>
                         {platforms.map(p => (
@@ -106,30 +124,28 @@ export default function AppLayout() {
                                 style={{
                                     ...styles.chip,
                                     background: p.bg,
-                                    color: p.color,
                                     border: `1px solid ${p.color}30`,
                                 }}
                             >
-                                {p.abbr}
+                                <PlatformIcon platformId={p.id} size={14} color={p.color} />
                             </div>
                         ))}
                     </div>
                 </div>
-
             </aside>
 
             {/* MAIN */}
-            <main style={styles.main}>
-                <Routes>
-                    <Route path="/" element={<Composer />} />
-                    <Route path="/scheduled" element={<Scheduled />} />
-                    <Route path="/history" element={<History />} />
-                    <Route path="/connections" element={<Connections />} />
-                    <Route path="/settings" element={<Settings />} />
-                </Routes>
-            </main>
+        < main style = { styles.main } >
+            <Routes>
+                <Route path="/" element={<Composer />} />
+                <Route path="/scheduled" element={<Scheduled />} />
+                <Route path="/history" element={<History />} />
+                <Route path="/connections" element={<Connections />} />
+                <Route path="/settings" element={<Settings />} />
+            </Routes>
+                </main >
 
-        </div>
+        </div >
     )
 }
 
@@ -178,6 +194,19 @@ const styles: Record<string, React.CSSProperties> = {
         textTransform: 'uppercase',
         color: 'var(--text-muted)',
         marginTop: '4px',
+    },
+    backBtn: {
+        marginTop: '10px',
+        fontFamily: "'DM Mono', monospace",
+        fontSize: '10px',
+        letterSpacing: '0.5px',
+        color: 'var(--text-muted)',
+        cursor: 'pointer',
+        transition: 'all 0.15s ease',
+        border: '1px solid var(--border-subtle)',
+        borderRadius: '6px',
+        padding: '5px 10px',
+        display: 'inline-block',
     },
 
     /* Nav */

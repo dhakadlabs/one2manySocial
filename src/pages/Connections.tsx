@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { usePlatforms } from '../hooks/usePlatforms'
 import { getPlugin } from '../core/registry'
+import PlatformIcon from '../components/shared/PlatformIcon'
 
 const ALL_PLATFORMS = [
     {
@@ -154,7 +155,7 @@ const ALL_PLATFORMS = [
 ]
 
 export default function Connections() {
-    const { platforms, loading, refresh } = usePlatforms()
+    const { platforms, refresh } = usePlatforms()
     const [expandedId, setExpandedId] = useState<string | null>(null)
     const [formValues, setFormValues] = useState<Record<string, string>>({})
     const [connecting, setConnecting] = useState<string | null>(null)
@@ -247,10 +248,9 @@ export default function Connections() {
                                     <div style={{
                                         ...styles.platformIcon,
                                         background: platform.bg,
-                                        color: platform.color,
                                         border: `1px solid ${platform.color}30`,
                                     }}>
-                                        {platform.name.slice(0, 2).toUpperCase()}
+                                        <PlatformIcon platformId={platform.id} size={20} color={platform.color} />
                                     </div>
                                     <div style={styles.cardInfo}>
                                         <div style={styles.cardName}>{platform.name}</div>

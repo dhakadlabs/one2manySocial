@@ -42,7 +42,7 @@ export class MastodonPlugin implements PlatformPlugin {
     }
 
     transform(post: BasePost): Record<string, unknown> {
-        return transform(post) as Record<string, unknown>
+        return transform(post) as unknown as Record<string, unknown>
     }
 
     async publish(post: BasePost): Promise<PublishResult> {
