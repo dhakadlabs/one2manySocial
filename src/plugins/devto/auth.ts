@@ -2,10 +2,14 @@ import { saveToken, getToken, removeToken, hasToken } from '../../core/tokenStor
 import { DEVTO_CONFIG } from './config'
 
 const PLATFORM_ID = DEVTO_CONFIG.id
+const isDev = window.location.hostname === 'localhost'
 
-// CORS proxy for development — Dev.to blocks direct browser requests from localhost
-// In production this won't be needed if hosted on a real domain
-const CORS_PROXY = 'https://corsproxy.io/?'
+function apiUrl(path: string): string {
+    if (isDev) {
+        return `/devto-proxy/api${path}`
+    }
+    return `${DEVTO_CONFIG.apiBase}${path}`
+}
 
 export async function connect(credentials: Record<string, string>): Promise<void> {
     const { apiKey } = credentials
@@ -14,10 +18,7 @@ export async function connect(credentials: Record<string, string>): Promise<void
         throw new Error('API key is required')
     }
 
-    // Verify the API key works
-    const url = `${CORS_PROXY}${encodeURIComponent(`${DEVTO_CONFIG.apiBase}/users/me`)}`
-
-    const response = await fetch(url, {
+    const response = await fetch(apiUrl('/users/me'), {
         headers: {
             'api-key': apiKey.trim(),
             'Content-Type': 'application/json',

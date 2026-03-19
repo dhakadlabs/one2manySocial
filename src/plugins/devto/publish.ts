@@ -4,9 +4,17 @@ import { transform } from './transform'
 import { validate } from './validate'
 import { DEVTO_CONFIG } from './config'
 
+const isDev = window.location.hostname === 'localhost'
+
+function apiUrl(path: string): string {
+    if (isDev) {
+        return `/devto-proxy/api${path}`
+    }
+    return `${DEVTO_CONFIG.apiBase}${path}`
+}
+
 export async function publish(post: BasePost): Promise<PublishResult> {
     try {
-        // Validate first
         const validation = validate(post)
         if (!validation.valid) {
             return {
@@ -16,7 +24,6 @@ export async function publish(post: BasePost): Promise<PublishResult> {
             }
         }
 
-        // Get API key
         const apiKey = await getApiKey()
         if (!apiKey) {
             return {
@@ -26,13 +33,9 @@ export async function publish(post: BasePost): Promise<PublishResult> {
             }
         }
 
-        // Transform and send
         const payload = transform(post)
 
-        const CORS_PROXY = 'https://corsproxy.io/?'
-        const apiUrl = `${CORS_PROXY}${encodeURIComponent(`${DEVTO_CONFIG.apiBase}/articles`)}`
-
-        const response = await fetch(apiUrl, {
+        const response = await fetch(apiUrl('/articles'), {
             method: 'POST',
             headers: {
                 'api-key': apiKey,
