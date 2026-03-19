@@ -1,3 +1,5 @@
+const isDev = window.location.hostname === 'localhost'
+
 export const TUMBLR_CONFIG = {
     id: 'tumblr',
     name: 'Tumblr',
@@ -7,5 +9,7 @@ export const TUMBLR_CONFIG = {
     requestTokenUrl: 'https://www.tumblr.com/oauth/request_token',
     authorizeUrl: 'https://www.tumblr.com/oauth/authorize',
     accessTokenUrl: 'https://www.tumblr.com/oauth/access_token',
-    redirectUri: `${window.location.origin}/oauth/callback`,
+    redirectUri: isDev
+        ? 'http://localhost:5173/oauth/callback'
+        : 'https://one2many-social.vercel.app/oauth/callback',
 }
