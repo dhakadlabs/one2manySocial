@@ -2,7 +2,7 @@ import type { BasePost, PublishResult } from '../_interface/PlatformPlugin'
 import { getApiKey } from './auth'
 import { transform } from './transform'
 import { validate } from './validate'
-import { DEVTO_CONFIG } from './config'
+
 
 const isDev = window.location.hostname === 'localhost'
 
