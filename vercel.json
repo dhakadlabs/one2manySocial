@@ -5,16 +5,27 @@
       "destination": "https://dev.to/:path*"
     },
     {
-      "source": "/tumblr-proxy/:path*",
-      "destination": "https://www.tumblr.com/:path*"
-    },
-    {
-      "source": "/tumblr-api-proxy/:path*",
-      "destination": "https://api.tumblr.com/:path*"
-    },
-    {
       "source": "/:path*",
       "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/tumblr-proxy/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET,POST,OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Authorization,Content-Type"
+        }
+      ]
     }
   ]
 }

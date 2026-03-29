@@ -2,7 +2,6 @@ import type { BasePost, PublishResult } from '../_interface/PlatformPlugin'
 import { getCredentials } from './auth'
 import { transform } from './transform'
 import { validate } from './validate'
-import { TUMBLR_CONFIG } from './config'
 import { buildAuthHeader } from './oauth1'
 
 export async function publish(post: BasePost): Promise<PublishResult> {
@@ -27,10 +26,7 @@ export async function publish(post: BasePost): Promise<PublishResult> {
 
         const payload = transform(post)
 
-        // Real URL for signature
         const realUrl = `https://api.tumblr.com/v2/blog/${credentials.blogName}/posts`
-        // Proxy URL for fetch
-        const fetchUrl = `${TUMBLR_CONFIG.apiBase}/blog/${credentials.blogName}/posts`
 
         const authHeader = buildAuthHeader({
             method: 'POST',
@@ -41,7 +37,7 @@ export async function publish(post: BasePost): Promise<PublishResult> {
             tokenSecret: credentials.accessTokenSecret,
         })
 
-        const response = await fetch(fetchUrl, {
+        const response = await fetch(realUrl, {
             method: 'POST',
             headers: {
                 Authorization: authHeader,

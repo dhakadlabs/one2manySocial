@@ -15,10 +15,9 @@ export async function connect(credentials: Record<string, string>): Promise<void
         throw new Error('Consumer secret is required')
     }
 
-    // Signature MUST use real URL
     const authHeader = buildAuthHeader({
         method: 'POST',
-        url: 'https://www.tumblr.com/oauth/request_token',
+        url: TUMBLR_CONFIG.requestTokenUrl,
         consumerKey: consumerKey.trim(),
         consumerSecret: consumerSecret.trim(),
         extraParams: {
@@ -26,7 +25,6 @@ export async function connect(credentials: Record<string, string>): Promise<void
         },
     })
 
-    // Fetch uses proxy URL
     const response = await fetch(TUMBLR_CONFIG.requestTokenUrl, {
         method: 'POST',
         headers: {
@@ -70,7 +68,7 @@ export async function handleCallback(
 
     const authHeader = buildAuthHeader({
         method: 'POST',
-        url: 'https://www.tumblr.com/oauth/access_token',
+        url: TUMBLR_CONFIG.accessTokenUrl,
         consumerKey,
         consumerSecret,
         token: oauthToken,
@@ -101,7 +99,7 @@ export async function handleCallback(
 
     const userAuthHeader = buildAuthHeader({
         method: 'GET',
-        url: 'https://api.tumblr.com/v2/user/info',
+        url: `${TUMBLR_CONFIG.apiBase}/user/info`,
         consumerKey,
         consumerSecret,
         token: accessToken,
