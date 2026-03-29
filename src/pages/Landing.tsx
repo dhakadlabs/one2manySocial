@@ -1,16 +1,12 @@
 import { useNavigate } from 'react-router-dom'
 
 const platforms = [
-    { id: 'reddit', name: 'Reddit', abbr: 'Rd', color: '#ff4500', bg: 'rgba(255,69,0,0.12)' },
     { id: 'mastodon', name: 'Mastodon', abbr: 'Ms', color: '#6364ff', bg: 'rgba(99,100,255,0.12)' },
     { id: 'bluesky', name: 'Bluesky', abbr: 'Bs', color: '#0085ff', bg: 'rgba(0,133,255,0.12)' },
     { id: 'discord', name: 'Discord', abbr: 'Dc', color: '#5865f2', bg: 'rgba(88,101,242,0.12)' },
     { id: 'telegram', name: 'Telegram', abbr: 'Tg', color: '#0088cc', bg: 'rgba(0,136,204,0.12)' },
-    { id: 'wordpress', name: 'WordPress', abbr: 'Wp', color: '#21759b', bg: 'rgba(33,117,155,0.12)' },
     { id: 'devto', name: 'Dev.to', abbr: 'Dv', color: '#0838fe', bg: 'rgba(8,56,254,0.12)' },
     { id: 'hashnode', name: 'Hashnode', abbr: 'Hn', color: '#2962ff', bg: 'rgba(41,98,255,0.12)' },
-    { id: 'pinterest', name: 'Pinterest', abbr: 'Pt', color: '#e60023', bg: 'rgba(230,0,35,0.12)' },
-    { id: 'tumblr', name: 'Tumblr', abbr: 'Tm', color: '#35465c', bg: 'rgba(53,70,92,0.20)' },
 ]
 
 const features = [
@@ -22,7 +18,7 @@ const features = [
     {
         icon: '⬡',
         title: 'Publish Everywhere',
-        desc: 'Reddit, Mastodon, Bluesky, Discord, Telegram, WordPress, Dev.to, Hashnode, Pinterest, Tumblr — all at once.',
+        desc: 'Mastodon, Bluesky, Discord, Telegram, Dev.to, Hashnode — all at once.',
     },
     {
         icon: '◈',
@@ -223,8 +219,8 @@ export default function Landing() {
             <section style={styles.section}>
                 <div style={styles.sectionInner}>
                     <p style={styles.sectionLabel}>Supported Platforms</p>
-                    <h2 style={styles.sectionTitle}>10 platforms. One composer.</h2>
-                    <div style={styles.platformsGrid}>
+                    <h2 style={styles.sectionTitle}>6 core platforms. One composer.</h2>
+                    <div className="platforms-grid">
                         {platforms.map(p => (
                             <div
                                 key={p.id}
@@ -614,22 +610,16 @@ const styles: Record<string, React.CSSProperties> = {
     },
 
     /* PLATFORMS GRID */
-    platformsGrid: {
-        display: 'grid',
-        gridTemplateColumns: 'repeat(5, 1fr)',
-        gap: '12px',
-        width: '100%',
-        marginTop: '16px',
-    },
     platformCard: {
-        borderRadius: '14px',
-        padding: '24px 16px',
+        borderRadius: '16px',
+        padding: '32px 24px',
         display: 'flex',
         flexDirection: 'column' as const,
         alignItems: 'center',
-        gap: '10px',
+        gap: '12px',
         transition: 'all 0.2s ease',
         cursor: 'default',
+        background: 'rgba(255,255,255,0.03)',
     },
     platformCardIcon: {
         fontFamily: "'Syne', sans-serif",

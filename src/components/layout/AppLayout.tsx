@@ -21,16 +21,12 @@ const settingItems = [
 ]
 
 const platforms = [
-    { id: 'reddit', abbr: 'Rd', color: '#ff4500', bg: 'rgba(255,69,0,0.12)' },
     { id: 'mastodon', abbr: 'Ms', color: '#6364ff', bg: 'rgba(99,100,255,0.12)' },
     { id: 'bluesky', abbr: 'Bs', color: '#0085ff', bg: 'rgba(0,133,255,0.12)' },
     { id: 'discord', abbr: 'Dc', color: '#5865f2', bg: 'rgba(88,101,242,0.12)' },
     { id: 'telegram', abbr: 'Tg', color: '#0088cc', bg: 'rgba(0,136,204,0.12)' },
-    { id: 'wordpress', abbr: 'Wp', color: '#21759b', bg: 'rgba(33,117,155,0.12)' },
     { id: 'devto', abbr: 'Dv', color: '#0838fe', bg: 'rgba(8,56,254,0.12)' },
     { id: 'hashnode', abbr: 'Hn', color: '#2962ff', bg: 'rgba(41,98,255,0.12)' },
-    { id: 'pinterest', abbr: 'Pt', color: '#e60023', bg: 'rgba(230,0,35,0.12)' },
-    { id: 'tumblr', abbr: 'Tm', color: '#35465c', bg: 'rgba(53,70,92,0.20)' },
 ]
 
 export default function AppLayout() {

@@ -19,10 +19,6 @@ const PLATFORM_LIMITS: Record<string, {
   mastodon: { maxBody: 500 },
   devto: { requiresTitle: true, maxTags: 4 },
   hashnode: { requiresTitle: true, maxTags: 5 },
-  reddit: { requiresTitle: true },
-  pinterest: { requiresImage: true },
-  tumblr: {},
-  wordpress: { requiresTitle: true },
 }
 
 export default function Composer() {
@@ -214,7 +210,6 @@ export default function Composer() {
         return title ? `*${title}*\n\n${previewBody}` : previewBody
       case 'devto':
       case 'hashnode':
-      case 'wordpress':
         return `# ${title || 'Untitled'}\n\n${previewBody}`
       default:
         return previewBody
@@ -481,7 +476,7 @@ export default function Composer() {
             {/* TITLE */}
             <textarea
               style={styles.titleInput}
-              placeholder="Title (optional — required for Dev.to, Hashnode, WordPress)"
+              placeholder="Title (optional — required for Dev.to, Hashnode)"
               value={title}
               onChange={e => setTitle(e.target.value)}
               rows={1}

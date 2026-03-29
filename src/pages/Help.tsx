@@ -271,52 +271,6 @@ const HELP_SECTIONS: HelpSection[] = [
             'Posts are published immediately as public articles',
         ],
     },
-    {
-        platformId: 'tumblr',
-        name: 'Tumblr',
-        color: '#35465c',
-        bg: 'rgba(53,70,92,0.20)',
-        authType: 'OAuth 1.0 (Consumer Key + Secret)',
-        intro: 'Tumblr uses OAuth 1.0 which requires you to create a Tumblr app to get a consumer key and secret. This is a one-time setup.',
-        steps: [
-            {
-                title: 'Log in to Tumblr',
-                description: 'Go to tumblr.com and log in to your account.',
-            },
-            {
-                title: 'Go to the app registration page',
-                description: 'Visit this URL:',
-                code: 'https://www.tumblr.com/oauth/apps',
-            },
-            {
-                title: 'Register a new application',
-                description: 'Click "Register application" and fill in the form:',
-            },
-            {
-                title: 'Fill in the application details',
-                description: 'Use these values in the registration form:',
-                code: 'Application name: one2manySocial\nApplication website: https://one2many-social.vercel.app\nDefault callback URL: https://one2many-social.vercel.app/oauth/callback',
-            },
-            {
-                title: 'Get your Consumer Key and Secret',
-                description: 'After registering, you will see your Consumer Key and Consumer Secret on the apps page.',
-            },
-            {
-                title: 'Paste in the app',
-                description: 'Go to Connections → Tumblr → Connect → paste your Consumer Key and Consumer Secret → click Connect Tumblr.',
-            },
-            {
-                title: 'Approve access',
-                description: 'Your browser will open Tumblr asking you to authorize the app. Click "Allow" and you will be redirected back.',
-            },
-        ],
-        notes: [
-            'The Consumer Key and Secret are tied to your Tumblr app, not your account',
-            'You only need to create the app once',
-            'You can manage your apps at tumblr.com/oauth/apps',
-            'Posts support text, titles, and tags',
-        ],
-    },
 ]
 
 export default function Help() {

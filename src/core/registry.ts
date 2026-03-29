@@ -5,7 +5,6 @@ import { TelegramPlugin } from '../plugins/telegram'
 import { BlueskyPlugin } from '../plugins/bluesky'
 import { MastodonPlugin } from '../plugins/mastodon'
 import { HashnodePlugin } from '../plugins/hashnode'
-import { TumblrPlugin } from '../plugins/tumblr'
 
 
 export const PLATFORM_REGISTRY: PlatformPlugin[] = [
@@ -15,7 +14,6 @@ export const PLATFORM_REGISTRY: PlatformPlugin[] = [
     new BlueskyPlugin(),
     new MastodonPlugin(),
     new HashnodePlugin(),
-    new TumblrPlugin(),
 
 ]
 

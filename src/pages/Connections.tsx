@@ -127,31 +127,6 @@ const ALL_PLATFORMS = [
             },
         ],
     },
-    {
-        id: 'tumblr',
-        name: 'Tumblr',
-        description: 'Post to Tumblr via OAuth 1.0',
-        authType: 'oauth1',
-        color: '#35465c',
-        bg: 'rgba(53,70,92,0.20)',
-        fields: [
-            {
-                key: 'consumerKey',
-                label: 'Consumer Key',
-                placeholder: 'Paste your Tumblr consumer key...',
-                type: 'text',
-                hint: 'Go to tumblr.com/oauth/apps → Register Application → get Consumer Key',
-            },
-            {
-                key: 'consumerSecret',
-                label: 'Consumer Secret',
-                placeholder: 'Paste your Tumblr consumer secret...',
-                type: 'password',
-                hint: 'Found alongside your Consumer Key in your Tumblr app settings',
-            },
-        ],
-    },
-
 ]
 
 export default function Connections() {
@@ -345,16 +320,6 @@ export default function Connections() {
                         </div>
                     )
                 })}
-            </div>
-
-            {/* COMING SOON */}
-            <div style={styles.comingSoon}>
-                <div style={styles.comingSoonLabel}>More platforms coming soon</div>
-                <div style={styles.comingSoonGrid}>
-                    {['Reddit', 'WordPress', 'Pinterest'].map(name => (
-                        <div key={name} style={styles.comingSoonChip}>{name}</div>
-                    ))}
-                </div>
             </div>
 
         </div>

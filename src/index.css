@@ -44,16 +44,12 @@
   --error-dim: rgba(255, 96, 112, 0.12);
 
   /* Platform colors */
-  --reddit: #ff4500;
   --mastodon: #6364ff;
   --bluesky: #0085ff;
   --discord: #5865f2;
   --telegram: #0088cc;
-  --wordpress: #21759b;
   --devto: #0838fe;
   --hashnode: #2962ff;
-  --pinterest: #e60023;
-  --tumblr: #35465c;
 
   /* Shadows */
   --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -193,4 +189,26 @@ body::before {
 
 .animate-fade-in {
   animation: fadeIn 0.3s ease forwards;
+}
+
+/* Responsive Grids */
+.platforms-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  width: 100%;
+  margin-top: 32px;
+}
+
+@media (max-width: 768px) {
+  .platforms-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .platforms-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
 }

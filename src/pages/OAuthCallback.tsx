@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { handleCallback as handleMastodonCallback } from '../plugins/mastodon/auth'
-import { handleCallback as handleTumblrCallback } from '../plugins/tumblr/auth'
 
 export default function OAuthCallback() {
     const [searchParams] = useSearchParams()
@@ -12,29 +11,11 @@ export default function OAuthCallback() {
     useEffect(() => {
         const code = searchParams.get('code')
         const error = searchParams.get('error')
-        const oauthToken = searchParams.get('oauth_token')
-        const oauthVerifier = searchParams.get('oauth_verifier')
 
         if (error) {
             setStatus('error')
             setMessage('Authorization was denied. Please try again.')
             setTimeout(() => navigate('/app/connections'), 3000)
-            return
-        }
-
-        // Tumblr OAuth 1.0 callback
-        if (oauthToken && oauthVerifier) {
-            handleTumblrCallback(oauthToken, oauthVerifier)
-                .then(() => {
-                    setStatus('success')
-                    setMessage('Tumblr connected successfully!')
-                    setTimeout(() => navigate('/app/connections'), 2000)
-                })
-                .catch(err => {
-                    setStatus('error')
-                    setMessage(err.message ?? 'Connection failed. Please try again.')
-                    setTimeout(() => navigate('/app/connections'), 3000)
-                })
             return
         }
 
