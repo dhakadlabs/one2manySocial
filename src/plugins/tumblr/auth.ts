@@ -4,13 +4,6 @@ import { buildAuthHeader } from './oauth1'
 
 const PLATFORM_ID = TUMBLR_CONFIG.id
 
-const isDev = window.location.hostname === 'localhost'
-const CORS_PROXY = 'https://corsproxy.io/?'
-
-function proxyUrl(url: string): string {
-    return isDev ? `${CORS_PROXY}${encodeURIComponent(url)}` : url
-}
-
 export async function connect(credentials: Record<string, string>): Promise<void> {
     const { consumerKey, consumerSecret } = credentials
 
@@ -22,9 +15,10 @@ export async function connect(credentials: Record<string, string>): Promise<void
         throw new Error('Consumer secret is required')
     }
 
+    // Signature MUST use real URL
     const authHeader = buildAuthHeader({
         method: 'POST',
-        url: TUMBLR_CONFIG.requestTokenUrl,
+        url: 'https://www.tumblr.com/oauth/request_token',
         consumerKey: consumerKey.trim(),
         consumerSecret: consumerSecret.trim(),
         extraParams: {
@@ -32,7 +26,8 @@ export async function connect(credentials: Record<string, string>): Promise<void
         },
     })
 
-    const response = await fetch(proxyUrl(TUMBLR_CONFIG.requestTokenUrl), {
+    // Fetch uses proxy URL
+    const response = await fetch(TUMBLR_CONFIG.requestTokenUrl, {
         method: 'POST',
         headers: {
             Authorization: authHeader,
@@ -41,7 +36,8 @@ export async function connect(credentials: Record<string, string>): Promise<void
     })
 
     if (!response.ok) {
-        throw new Error('Failed to get request token. Please check your consumer key and secret.')
+        const text = await response.text()
+        throw new Error(`Failed to get request token: ${response.status} — ${text}`)
     }
 
     const responseText = await response.text()
@@ -74,7 +70,7 @@ export async function handleCallback(
 
     const authHeader = buildAuthHeader({
         method: 'POST',
-        url: TUMBLR_CONFIG.accessTokenUrl,
+        url: 'https://www.tumblr.com/oauth/access_token',
         consumerKey,
         consumerSecret,
         token: oauthToken,
@@ -82,7 +78,7 @@ export async function handleCallback(
         extraParams: { oauth_verifier: oauthVerifier },
     })
 
-    const response = await fetch(proxyUrl(TUMBLR_CONFIG.accessTokenUrl), {
+    const response = await fetch(TUMBLR_CONFIG.accessTokenUrl, {
         method: 'POST',
         headers: {
             Authorization: authHeader,
@@ -105,14 +101,14 @@ export async function handleCallback(
 
     const userAuthHeader = buildAuthHeader({
         method: 'GET',
-        url: `${TUMBLR_CONFIG.apiBase}/user/info`,
+        url: 'https://api.tumblr.com/v2/user/info',
         consumerKey,
         consumerSecret,
         token: accessToken,
         tokenSecret: accessTokenSecret,
     })
 
-    const userResponse = await fetch(proxyUrl(`${TUMBLR_CONFIG.apiBase}/user/info`), {
+    const userResponse = await fetch(`${TUMBLR_CONFIG.apiBase}/user/info`, {
         headers: { Authorization: userAuthHeader },
     })
 
@@ -131,9 +127,7 @@ export async function handleCallback(
             accessTokenSecret,
             blogName,
         },
-        {
-            displayName: blogName,
-        }
+        { displayName: blogName }
     )
 
     sessionStorage.removeItem('tumblr_oauth_pending')

@@ -5,8 +5,12 @@
       "destination": "https://dev.to/:path*"
     },
     {
-      "source": "/api/:path*",
-      "destination": "/api/:path*"
+      "source": "/tumblr-proxy/:path*",
+      "destination": "https://www.tumblr.com/:path*"
+    },
+    {
+      "source": "/tumblr-api-proxy/:path*",
+      "destination": "https://api.tumblr.com/:path*"
     },
     {
       "source": "/:path*",

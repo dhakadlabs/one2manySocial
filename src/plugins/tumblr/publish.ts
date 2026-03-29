@@ -5,13 +5,6 @@ import { validate } from './validate'
 import { TUMBLR_CONFIG } from './config'
 import { buildAuthHeader } from './oauth1'
 
-const isDev = window.location.hostname === 'localhost'
-const CORS_PROXY = 'https://corsproxy.io/?'
-
-function proxyUrl(url: string): string {
-    return isDev ? `${CORS_PROXY}${encodeURIComponent(url)}` : url
-}
-
 export async function publish(post: BasePost): Promise<PublishResult> {
     try {
         const validation = validate(post)
@@ -33,18 +26,22 @@ export async function publish(post: BasePost): Promise<PublishResult> {
         }
 
         const payload = transform(post)
-        const url = `${TUMBLR_CONFIG.apiBase}/blog/${credentials.blogName}/posts`
+
+        // Real URL for signature
+        const realUrl = `https://api.tumblr.com/v2/blog/${credentials.blogName}/posts`
+        // Proxy URL for fetch
+        const fetchUrl = `${TUMBLR_CONFIG.apiBase}/blog/${credentials.blogName}/posts`
 
         const authHeader = buildAuthHeader({
             method: 'POST',
-            url,
+            url: realUrl,
             consumerKey: credentials.consumerKey,
             consumerSecret: credentials.consumerSecret,
             token: credentials.accessToken,
             tokenSecret: credentials.accessTokenSecret,
         })
 
-        const response = await fetch(proxyUrl(url), {
+        const response = await fetch(fetchUrl, {
             method: 'POST',
             headers: {
                 Authorization: authHeader,
@@ -66,7 +63,7 @@ export async function publish(post: BasePost): Promise<PublishResult> {
         if (response.status === 401) {
             return {
                 success: false,
-                error: 'Tumblr token expired. Please reconnect in Connections.',
+                error: 'Tumblr token expired. Please reconnect.',
                 errorCode: 'AUTH_EXPIRED',
                 retryable: false,
             }
